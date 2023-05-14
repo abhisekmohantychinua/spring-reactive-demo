@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS students;
 CREATE TABLE IF NOT EXISTS students
 (
     id         SERIAL NOT NULL PRIMARY KEY,

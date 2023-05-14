@@ -16,7 +16,7 @@ public class StudentConfig {
     @Bean
     public CommandLineRunner runner(StudentRepository repository) {
         return args -> {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 100; i++) {
                 repository.save(
                         Student
                                 .builder()

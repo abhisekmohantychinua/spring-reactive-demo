@@ -5,41 +5,35 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository repo;
 
-    public Optional<Student> getStudentByFirstName(String firstName) {
-        return repo
-                .findByFirstName(firstName);
+    public Flux<Student> getStudentByFirstName(String firstName) {
+        return repo.findByFirstNameContainingIgnoreCase(firstName).delayElements(Duration.ofSeconds(2));
     }
 
-    public Optional<Student> getStudentById(int id) {
-        return repo
-                .findById(id);
+    public Mono<Student> getStudentById(int id) {
+        return repo.findById(id);
     }
 
     public Flux<Student> getAllStudent() {
-        return repo
-                .findAll();
+        return repo.findAll().delayElements(Duration.ofSeconds(2));
     }
 
     public Flux<Student> getAllStudentByAge(int age) {
-        return repo
-                .findAllByAge(age);
+        return repo.findAllByAge(age).delayElements(Duration.ofSeconds(1));
     }
 
     public Mono<Student> addStudent(Student student) {
-        return repo
-                .save(student);
+        return repo.save(student);
     }
 
-    public Flux<Student> addStudents(List<Student> students) {
-        return repo
-                .saveAll(students);
+
+    public Flux<Student> getStudentByLastName(String lastName) {
+        return repo.findAllByLastNameContainingIgnoreCase(lastName).delayElements(Duration.ofSeconds(2));
     }
 }
